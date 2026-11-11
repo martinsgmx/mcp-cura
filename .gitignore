@@ -1,0 +1,49 @@
+# Rust build artifacts
+/target/
+**/*.rs.bk
+
+# Local Cura engine binaries and runtime workspace
+/.cura-engine/*
+!/.cura-engine/.gitkeep
+/.mcp-cura/
+
+# Generated/imported 3D artifacts
+*.gcode
+*.stl
+*.3mf
+*.obj
+!tests/fixtures/*.stl
+!tests/fixtures/*.3mf
+!tests/fixtures/*.obj
+!examples/**/*.stl
+!examples/**/*.3mf
+!examples/**/*.obj
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+/mcp-cura.toml
+*.local.toml
+!examples/mcp-cura.toml
+!examples/*.local.toml
+
+# Logs and runtime output
+*.log
+*.jsonl
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Coverage/profiling
+*.profraw
+*.profdata
+/coverage/
