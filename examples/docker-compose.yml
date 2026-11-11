@@ -1,0 +1,45 @@
+# Example deployment: HTTP transport in Docker, loopback-only host port.
+#
+# Usage:
+#   export MCP_CURA_HTTP_TOKEN="$(openssl rand -hex 32)"
+#   docker compose -f examples/docker-compose.yml up -d --build
+#
+# Approve a pending action inside the container:
+#   docker compose -f examples/docker-compose.yml exec mcp-cura \
+#     mcp-cura pending
+#   docker compose -f examples/docker-compose.yml exec mcp-cura \
+#     mcp-cura approve apr_...
+#
+# Put a TLS reverse proxy in front for any access beyond localhost.
+
+services:
+  mcp-cura:
+    build:
+      context: ..
+    image: mcp-cura:local
+    restart: unless-stopped
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - "127.0.0.1:8765:8765"
+    environment:
+      MCP_CURA_HTTP_HOST: 0.0.0.0
+      MCP_CURA_HTTP_PORT: 8765
+      MCP_CURA_HTTP_TOKEN: ${MCP_CURA_HTTP_TOKEN:?set MCP_CURA_HTTP_TOKEN}
+      MCP_CURA_STATE_DIR: /var/lib/mcp-cura
+      MCP_CURA_APPROVAL_MODE: ${MCP_CURA_APPROVAL_MODE:-out_of_band}
+      MCP_CURA_LOG_LEVEL: ${MCP_CURA_LOG_LEVEL:-info}
+    volumes:
+      - mcp-cura-state:/var/lib/mcp-cura
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8765/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+
+volumes:
+  mcp-cura-state:

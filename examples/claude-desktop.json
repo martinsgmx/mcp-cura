@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "cura": {
+      "command": "mcp-cura",
+      "env": {
+        "MCP_CURA_ENGINE_BINARY": "/usr/bin/CuraEngine"
+      }
+    }
+  }
+}

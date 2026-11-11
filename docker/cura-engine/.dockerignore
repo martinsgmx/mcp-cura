@@ -1,0 +1,2 @@
+# Things the engine itself does not need. Keeps the build context tiny.
+*

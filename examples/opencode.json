@@ -1,0 +1,13 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "cura": {
+      "type": "local",
+      "command": ["mcp-cura"],
+      "enabled": true,
+      "environment": {
+        "MCP_CURA_ENGINE_BINARY": "/usr/bin/CuraEngine"
+      }
+    }
+  }
+}

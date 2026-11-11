@@ -1,0 +1,52 @@
+# mcp-cura configuration
+#
+# Precedence: built-in defaults < this file < environment variables < CLI flags.
+# Keep secrets out of this file. Use MCP_CURA_HTTP_TOKEN for the HTTP transport.
+
+[server]
+transport = "stdio"
+
+[server.http]
+host = "127.0.0.1"
+port = 8765
+path = "/mcp"
+allow_unauthenticated = false
+
+[workspace]
+root = "~/.local/share/mcp-cura"
+max_import_bytes = 536870912
+max_artifact_bytes = 1073741824
+max_artifacts = 10000
+keep_jobs = 100
+
+[engine]
+runner = "binary"
+binary = "CuraEngine"
+# docker_image = "cura-engine:5.14.0"
+timeout_secs = 900
+mode = "resolved_json"
+
+[profiles]
+dirs = []
+auto_discover = true
+max_profiles = 20000
+
+[policy]
+read_only = false
+allow_workspace_writes = true
+allow_slicing = true
+allow_export = true
+allow_delete = true
+max_hotend_temp = 320.0
+max_bed_temp = 130.0
+max_triangles = 5000000
+max_voxel_cells = 64000000
+max_concurrent_jobs = 2
+max_slice_secs = 900
+
+[approval]
+mode = "in_band"
+ttl_secs = 120
+
+[logging]
+level = "info"
